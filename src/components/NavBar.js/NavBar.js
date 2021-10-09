@@ -10,11 +10,15 @@ import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import HomeIcon from '@mui/icons-material/Home';
+import ExploreIcon from '@mui/icons-material/Explore';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import logo from '../../assets/logo.png';
 import { makeStyles } from '@mui/styles';
-
+import Home from '../Home/Home'
+import Product from '../Products/Product';
+import Cart from '../Cart.js/Cart';
 import {
     BrowserRouter as Router,
     Switch,
@@ -97,11 +101,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function NavBar() {
-    const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const classes = useStyles();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   
@@ -115,7 +117,6 @@ export default function NavBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = 'primary-search-account-menu';
   
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -136,12 +137,28 @@ export default function NavBar() {
       onClose={handleMobileMenuClose}
     >   
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+        <IconButton size="large" aria-label="cart" color="inherit">
+          <Badge badgeContent={0} color="error">
+            <HomeIcon />
+          </Badge>
+        </IconButton>
+        <p>Home</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton size="large" aria-label="cart" color="inherit">
           <Badge badgeContent={0} color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
         <p>Cart</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton size="large" aria-label="cart" color="inherit">
+          <Badge badgeContent={0} color="error">
+            <ExploreIcon />
+          </Badge>
+        </IconButton>
+        <p>Products</p>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -159,22 +176,24 @@ export default function NavBar() {
   );
 
   return (
-      <Router>
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
         <img alt='logo'src={logo} className={classes.logo}/>
+        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+
         <nav>
           <ul className={classes.menuItem}>
             <li>
-              <Link to="/">Home</Link>
+                Home
             </li>
             <li>
-              <Link to="/products">Products</Link>
+                Products
             </li>
            
           </ul>
         </nav>
+        </Box>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -185,13 +204,11 @@ export default function NavBar() {
             />
           </Search>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <Link to="/cart" className={classes.icon}> 
             <IconButton size="large" aria-label="mails" color="inherit">
               <Badge badgeContent={0} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
-            </Link>
             <IconButton
               size="large"
               aria-label="notifications"
@@ -218,28 +235,9 @@ export default function NavBar() {
       </AppBar>
       {renderMobileMenu}
     </Box>
-    <Switch>
-    <Route path="/products">
-      <Products />
-    </Route>
-    <Route path="/cart">
-      <Cart />
-    </Route>
-    <Route path="/">
-      <Home />
-    </Route>
-  </Switch>
-  </Router>
+   
   );
-  function Home() {
-    return <h2>Home</h2>;
-  }
+ 
   
-  function Products() {
-    return <h2>Products</h2>;
-  }
-  
-  function Cart() {
-    return <h2>Cart</h2>;
-  }
+
 }

@@ -1,6 +1,17 @@
 import './App.css';
 import NavBar from './components/NavBar.js/NavBar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import Home from './components/Home/Home';
+import Cart from './components/Cart.js/Cart';
+import Product from './components/Products/Product';
+import ItemListContainer from './components/ItemListContainer'
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 let theme = createTheme({
   palette: {
@@ -50,14 +61,18 @@ let theme = createTheme({
 function App() {
   
   return (
+    
     <ThemeProvider theme={theme}>
     <div className="App">
-     <section> 
+     <section className="header"> 
        <NavBar />
+     </section>
+     <section className="itemsContainer">
+       <ItemListContainer greeting='Productos'/>
      </section>
     </div>
     </ThemeProvider>
-    
+
   );
 }
 
