@@ -193,7 +193,7 @@ function NavBar() {
             />
           </Search>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Link to="/cart" activeStyle={{ fill: "white" }}>
+            <Link to="/cart">
               <IconButton
                 size="large"
                 aria-label="mails"
