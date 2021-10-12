@@ -5,15 +5,16 @@ import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import "./ItemCount.css";
 function ItemCount({ stock, initial, onAdd }) {
-  var [contador, setContador] = useState(initial);
+  const [contador, setContador] = useState(initial);
 
   const handleRemoveClick = () => {
-    setContador(contador--);
-    console.log(contador);
+    const mayor = Math.max(contador - 1, 1);
+    const resultado = mayor === 1 ? setContador(1) : setContador(contador - 1);
   };
   const handleAddClick = () => {
-    setContador(contador++);
-    console.log(contador);
+    const minimo = Math.min(contador + 1, stock);
+    const resultado =
+      minimo === stock ? setContador(stock) : setContador(contador + 1);
   };
   return (
     <div className="contador__container">
