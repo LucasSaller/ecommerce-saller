@@ -1,0 +1,5 @@
+.container__products{
+    max-width: 1500px;
+    justify-content: center;
+    margin: 0 auto;
+}
