@@ -2,7 +2,7 @@ import "./App.css";
 import NavBar from "./components/NavBar.js/NavBar";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { BrowserRouter as Router } from "react-router-dom";
-import ItemListContainer from "./components/ItemListContainer";
+import ItemListContainer from "./components/Products/ItemListContainer";
 import Routes from "./Routes/Routes";
 
 let theme = createTheme({

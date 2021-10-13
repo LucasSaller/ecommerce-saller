@@ -16,7 +16,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import logo from "../../assets/logo.png";
 import { makeStyles } from "@mui/styles";
-
+import StorefrontIcon from "@mui/icons-material/Storefront";
 import { withRouter, Link } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -169,7 +169,11 @@ function NavBar() {
       <AppBar position="static">
         <Toolbar>
           <Link to="/">
-            <img alt="logo" src={logo} className={classes.logo} />
+            {/* <img alt="logo" src={logo} className={classes.logo} /> */}
+            <StorefrontIcon
+              size="large"
+              style={{ fill: "white", width: 100, height: 50 }}
+            />
           </Link>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <nav>
@@ -201,13 +205,13 @@ function NavBar() {
                 className={classes.menuItem}
               >
                 <Badge badgeContent={0} color="error">
-                  <ShoppingCartIcon />
+                  <ShoppingCartIcon style={{ fill: "white" }} />
                 </Badge>
               </IconButton>
             </Link>
             <IconButton size="large" aria-label="notifications" color="inherit">
               <Badge badgeContent={1} color="error">
-                <NotificationsIcon />
+                <NotificationsIcon style={{ fill: "white" }} />
               </Badge>
             </IconButton>
           </Box>

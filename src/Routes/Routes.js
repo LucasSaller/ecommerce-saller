@@ -2,8 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Cart from "../components/Cart.js/Cart";
 import Home from "../components/Home/Home";
-import Product from "../components/Products/Product";
-import ItemListContainer from "../components/ItemListContainer";
+import ItemListContainer from "../components/Products/ItemListContainer";
 
 function Routes() {
   return (

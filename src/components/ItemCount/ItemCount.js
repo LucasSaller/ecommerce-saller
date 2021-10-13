@@ -9,12 +9,19 @@ function ItemCount({ stock, initial, onAdd }) {
 
   const handleRemoveClick = () => {
     const mayor = Math.max(contador - 1, 1);
-    const resultado = mayor === 1 ? setContador(1) : setContador(contador - 1);
+    if (mayor === 1) {
+      setContador(1);
+    } else {
+      setContador(contador - 1);
+    }
   };
   const handleAddClick = () => {
     const minimo = Math.min(contador + 1, stock);
-    const resultado =
-      minimo === stock ? setContador(stock) : setContador(contador + 1);
+    if (minimo === stock) {
+      setContador(stock);
+    } else {
+      setContador(contador + 1);
+    }
   };
   return (
     <div className="contador__container">
