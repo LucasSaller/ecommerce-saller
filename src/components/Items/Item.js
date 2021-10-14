@@ -16,9 +16,9 @@ const useStyles = makeStyles({
     justifyContent: "space-around",
   },
 });
-function Product({ item }) {
+function Item({ item }) {
   const classes = useStyles();
-  const { name, price, poster, stock } = item;
+  const { name, price, poster } = item;
   return (
     <div>
       <Card
@@ -69,4 +69,4 @@ function Product({ item }) {
   );
 }
 
-export default withStyles(useStyles)(Product);
+export default withStyles(useStyles)(Item);

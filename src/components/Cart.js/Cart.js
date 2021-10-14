@@ -3,11 +3,12 @@ import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
-import { Grid } from "@mui/material";
+import { Button, Grid, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import ItemCount from "../ItemCount/ItemCount";
 import producto from "../../assets/producto1.jpeg";
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import "./Cart.css";
 const Img = styled("img")({
   margin: "auto",
   display: "block",
@@ -17,54 +18,15 @@ const Img = styled("img")({
 function Cart() {
   return (
     <>
-      {/* <ItemCount initial={1} stock={22} /> */}
-      {/* <Paper sx={{ p: 2, margin: "auto", flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <Grid item>
-            <ButtonBase sx={{ width: 128, height: 128 }}>
-              <Img alt="complex" src="/static/images/grid/complex.jpg" />
-            </ButtonBase>
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography gutterBottom variant="subtitle1" component="div">
-                  Standard license
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  Full resolution 1920x1080 • JPEG
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  ID: 1030114
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography sx={{ cursor: "pointer" }} variant="body2">
-                  Remove
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Typography variant="subtitle1" component="div">
-                $19.00
-              </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Paper> */}
-
-      <Grid>
+      <div className="cart__container">
         <Grid container>
           <Grid item md={8}>
             <Grid container>
-              <Paper sx={{ p: 2, margin: "auto", flexGrow: 1 }}>
+              <Paper sx={{ p: 2, margin: "auto", flexGrow: 1 }} elevation={5}>
                 <Grid container spacing={2}>
                   <Grid item>
                     <ButtonBase sx={{ width: 128, height: 128 }}>
-                      <Img
-                        alt="complex"
-                        src="/static/images/grid/complex.jpg"
-                      />
+                      <Img alt="complex" src={producto} />
                     </ButtonBase>
                   </Grid>
                   <Grid item xs={12} sm container>
@@ -75,25 +37,32 @@ function Cart() {
                           variant="subtitle1"
                           component="div"
                         >
-                          Standard license
+                          Nike air
                         </Typography>
                         <Typography variant="body2" gutterBottom>
-                          Full resolution 1920x1080 • JPEG
+                          asdads
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                           ID: 1030114
                         </Typography>
                       </Grid>
-                      <Grid item>
-                        <Typography sx={{ cursor: "pointer" }} variant="body2">
-                          Remove
-                        </Typography>
-                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <Typography variant="subtitle1" component="div">
+                    <Grid
+                      item
+                      display="flex"
+                      justifyContent="space-between"
+                      flexDirection="column"
+                    >
+                      <Typography
+                        variant="subtitle1"
+                        component="div"
+                        style={{ fontWeight: "bold" }}
+                      >
                         $19.00
                       </Typography>
+                      <IconButton>
+                        <DeleteIcon color="primary" />
+                      </IconButton>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -104,7 +73,7 @@ function Cart() {
             <h1>der</h1>
           </Grid>
         </Grid>
-      </Grid>
+      </div>
     </>
   );
 }
