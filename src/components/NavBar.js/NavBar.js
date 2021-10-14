@@ -142,17 +142,6 @@ function NavBar() {
           <p>Cart</p>
         </MenuItem>
       </Link>
-      <Link to="/products">
-        <MenuItem>
-          <IconButton size="large" aria-label="cart" color="inherit">
-            <Badge badgeContent={0} color="error">
-              <ExploreIcon />
-            </Badge>
-          </IconButton>
-          <p>Products</p>
-        </MenuItem>
-      </Link>
-
       <MenuItem>
         <IconButton size="large" aria-label="notifications" color="inherit">
           <Badge badgeContent={1} color="error">
@@ -180,9 +169,6 @@ function NavBar() {
               <ul className={classes.menuItem}>
                 <Link to="/">
                   <li>Home</li>
-                </Link>
-                <Link to="/products">
-                  <li>Products</li>
                 </Link>
               </ul>
             </nav>
