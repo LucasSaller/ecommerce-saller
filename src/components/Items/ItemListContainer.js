@@ -6,6 +6,8 @@ import ItemList from "./ItemList";
 
 function ItemListContainer({ greeting }) {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const task = new Promise((resolve) => {
       setTimeout(() => {
@@ -16,6 +18,7 @@ function ItemListContainer({ greeting }) {
       (result) => {
         console.log(result);
         setProducts(result);
+        setLoading(false);
       },
       (error) => {
         console.log(error);
@@ -27,7 +30,7 @@ function ItemListContainer({ greeting }) {
     <div>
       <h2 style={{ textAlign: "center", margin: "30px 0" }}>{greeting}</h2>
       <Grid container className="container__products">
-        <ItemList items={products} />
+        <ItemList items={products} loading={loading} />
       </Grid>
     </div>
   );

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Item from "./Item";
 import { Grid } from "@mui/material";
-function ItemList({ items }) {
+import CircularProgress from "@mui/material/CircularProgress";
+
+function ItemList({ items, loading }) {
   return (
     <div>
       <Grid container>
@@ -17,6 +19,7 @@ function ItemList({ items }) {
               <Item item={item} />
             </Grid>
           ))}
+        {loading && <CircularProgress color="primary" />}
       </Grid>
     </div>
   );

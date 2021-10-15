@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -8,6 +8,9 @@ import { makeStyles, withStyles } from "@mui/styles";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { IconButton } from "@mui/material";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import ItemDetail from "./ItemDetail/ItemDetail";
+import Modal from "@mui/material/Modal";
+
 const useStyles = makeStyles({
   productImage: {
     objectFit: "contain",
@@ -16,16 +19,26 @@ const useStyles = makeStyles({
     justifyContent: "space-around",
   },
 });
+
 function Item({ item }) {
   const classes = useStyles();
+  const [openModal, setOpenModal] = useState(false);
   const { name, price, poster } = item;
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+  const handleOpen = () => {
+    setOpenModal(true);
+  };
   return (
     <div>
       <Card
         sx={{ maxWidth: { xs: 200, md: 300 }, margin: { xs: "0 auto", md: 0 } }}
         style={{
           margin: "0 auto",
-          minHeight: 340,
+          minHeight: 400,
+          padding: 20,
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -61,12 +74,20 @@ function Item({ item }) {
             <ShoppingBasketIcon color="primary" />
           </IconButton>
           <IconButton>
-            <MoreHorizIcon color="primary" />
+            <MoreHorizIcon color="primary" onClick={handleOpen} />
           </IconButton>
         </CardActions>
       </Card>
+      <Modal
+        open={openModal}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <ItemDetail item={item} handleClose={handleClose} />
+      </Modal>
     </div>
   );
 }
 
-export default withStyles(useStyles)(Item);
+export default Item;

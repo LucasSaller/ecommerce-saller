@@ -18,6 +18,7 @@ import logo from "../../assets/logo.png";
 import { makeStyles } from "@mui/styles";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import { withRouter, Link } from "react-router-dom";
+import { Switch } from "@mui/material";
 
 const useStyles = makeStyles({
   icon: {
@@ -91,7 +92,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function NavBar() {
+function NavBar({ darkMode, handleDarkMode }) {
   const classes = useStyles();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -182,7 +183,10 @@ function NavBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box
+            sx={{ display: { xs: "none", md: "flex" } }}
+            style={{ alignItems: "center" }}
+          >
             <Link to="/cart">
               <IconButton
                 size="large"
@@ -200,6 +204,7 @@ function NavBar() {
                 <NotificationsIcon style={{ fill: "white" }} />
               </Badge>
             </IconButton>
+            <Switch onChange={handleDarkMode} value={darkMode} />
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton

@@ -41,7 +41,8 @@
         "price": 70000,
         "poster": "https://static.toiimg.com/photo/61654288.cms",
         "categoryId": 1,
-        "stock":5
+        "stock":5,
+        "initial":1
 
       },
       {
@@ -51,7 +52,8 @@
         "price": 60000,
         "poster": "https://www.androidcentral.com/sites/androidcentral.com/files/styles/w830_wm_brw/public/article_images/2019/08/galaxy-note-10-s-pen-out-1.jpg?itok=03gHRFqe",
         "categoryId": 1,
-        "stock":5
+        "stock":5,
+        "initial":1
       },
       {
         "id": 3,
@@ -60,7 +62,8 @@
         "price": 20000,
         "poster": "https://assets.mspimages.in/wp-content/uploads/2019/05/Asus-Zenfone-6-696x365.jpg",
         "categoryId": 1,
-        "stock":5
+        "stock":5,
+        "initial":1
       },
       {
         "id": 4,
@@ -101,7 +104,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 3,
-        "stock":7
+        "stock":7,
+        "initial":1
       },
       {
         "id": 9,
@@ -110,7 +114,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 4,
-        "stock":4
+        "stock":4,
+        "initial":1
       },
       {
         "id": 10,
@@ -119,7 +124,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 4,
-        "stock":4
+        "stock":4,
+        "initial":1
       },
       {
         "id": 11,
@@ -128,7 +134,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 5,
-        "stock":7
+        "stock":7,
+        "initial":1
       },
       {
         "id": 12,
@@ -137,7 +144,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 5,
-        "stock":7
+        "stock":7,
+        "initial":1
       },
       {
         "id": 13,
@@ -178,7 +186,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 5,
-        "stock":7
+        "stock":7,
+        "initial":1
       },
       {
         "id": 18,
@@ -187,7 +196,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 5,
-        "stock":7
+        "stock":7,
+        "initial":1
       },
       {
         "id": 19,
@@ -196,7 +206,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 5,
-        "stock":7
+        "stock":7,
+        "initial":1
       },
       {
         "id": 20,
@@ -205,7 +216,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 5,
-        "stock":7
+        "stock":7,
+        "initial":1
       },
       {
         "id": 21,
@@ -214,7 +226,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 5,
-        "stock":7
+        "stock":7,
+        "initial":1
       },
       {
         "id": 22,
@@ -223,7 +236,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 5,
-        "stock":7
+        "stock":7,
+        "initial":1
       },
       {
         "id": 23,
@@ -232,7 +246,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 5,
-        "stock":7
+        "stock":7,
+        "initial":1
       },
       {
         "id": 24,
@@ -241,7 +256,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 5,
-        "stock":7
+        "stock":7,
+        "initial":1
       },
       {
         "id": 25,
@@ -250,7 +266,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 5,
-        "stock":7
+        "stock":7,
+        "initial":1
       },
       {
         "id": 26,
@@ -259,7 +276,8 @@
         "price": 10000,
         "poster": "https://via.placeholder.com/300",
         "categoryId": 5,
-        "stock":7
+        "stock":7,
+        "initial":1
       },
       {
         "id": 27,
@@ -268,7 +286,8 @@
         "price": 40000,
         "poster": "https://technofaq.org/wp-content/uploads/2018/08/oneplus-6.jpg",
         "categoryId": 1,
-        "stock":5
+        "stock":5,
+        "initial":1
       }
     ]
   }
