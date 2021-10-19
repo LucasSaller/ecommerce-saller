@@ -16,13 +16,10 @@ function ItemListContainer({ greeting }) {
     });
     task.then(
       (result) => {
-        console.log(result);
         setProducts(result);
         setLoading(false);
       },
-      (error) => {
-        console.log(error);
-      }
+      (error) => {}
     );
   }, []);
 

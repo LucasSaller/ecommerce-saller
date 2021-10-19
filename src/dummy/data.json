@@ -71,7 +71,9 @@
         "available": true,
         "price": 30000,
         "poster": "https://i.gadgets360cdn.com/products/televisions/large/1548153503_832_mi_49-inch-led-full-hd-tv-4a-pro.jpg",
-        "categoryId": 2
+        "categoryId": 2,
+        "stock":7,
+        "initial":1
       },
       {
         "id": 5,
@@ -79,7 +81,9 @@
         "available": true,
         "price": 80000,
         "poster": "https://images-na.ssl-images-amazon.com/images/I/61MTM4sWe9L._SX425_.jpg",
-        "categoryId": 2
+        "categoryId": 2,
+        "stock":7,
+        "initial":1
       },
       {
         "id": 6,
@@ -87,7 +91,9 @@
         "available": true,
         "price": 30000,
         "poster": "https://www.lg.com/in/images/washing-machines/md05987837/gallery/medium01.jpg",
-        "categoryId": 2
+        "categoryId": 2,
+        "stock":7,
+        "initial":1
       },
       {
         "id": 7,
@@ -95,7 +101,9 @@
         "available": true,
         "price": 40000,
         "poster": "https://5.imimg.com/data5/AK/WK/MY-2646245/samsung-ac-500x500.jpg",
-        "categoryId": 2
+        "categoryId": 2,
+        "stock":7,
+        "initial":1
       },
       {
         "id": 8,

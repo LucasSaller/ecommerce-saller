@@ -4,7 +4,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { makeStyles, withStyles } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { IconButton } from "@mui/material";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
@@ -14,6 +14,7 @@ import Modal from "@mui/material/Modal";
 const useStyles = makeStyles({
   productImage: {
     objectFit: "contain",
+    height: "100%",
   },
   buttons: {
     justifyContent: "space-around",
@@ -34,11 +35,11 @@ function Item({ item }) {
   return (
     <div>
       <Card
-        sx={{ maxWidth: { xs: 200, md: 300 }, margin: { xs: "0 auto", md: 0 } }}
-        style={{
+        sx={{
+          maxWidth: { xs: 200, md: 300 },
+          minHeight: { xs: 0, md: 430 },
           margin: "0 auto",
-          minHeight: 400,
-          padding: 20,
+          padding: 0,
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -73,8 +74,8 @@ function Item({ item }) {
           <IconButton>
             <ShoppingBasketIcon color="primary" />
           </IconButton>
-          <IconButton>
-            <MoreHorizIcon color="primary" onClick={handleOpen} />
+          <IconButton onClick={handleOpen}>
+            <MoreHorizIcon color="primary" />
           </IconButton>
         </CardActions>
       </Card>

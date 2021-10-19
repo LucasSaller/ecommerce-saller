@@ -32,8 +32,8 @@ function ItemDetail({ item, handleClose }) {
   const { name, price, poster, stock, initial } = item;
   return (
     <Card sx={style}>
-      <IconButton>
-        <ArrowBackIcon color="primary" onClick={handleClose} />
+      <IconButton onClick={handleClose}>
+        <ArrowBackIcon color="primary" />
       </IconButton>
       <CardMedia
         component="img"

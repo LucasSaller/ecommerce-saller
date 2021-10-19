@@ -1,25 +1,28 @@
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import HomeIcon from "@mui/icons-material/Home";
-import ExploreIcon from "@mui/icons-material/Explore";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import logo from "../../assets/logo.png";
-import { makeStyles } from "@mui/styles";
-import StorefrontIcon from "@mui/icons-material/Storefront";
+import { makeStyles, useTheme } from "@mui/styles";
 import { withRouter, Link } from "react-router-dom";
-import { Switch } from "@mui/material";
-
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import logo from "../../assets/logo.svg";
+import MenuIcon from "@mui/icons-material/Menu";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import CloseIcon from "@mui/icons-material/Close";
+import Popover from "@mui/material/Popover";
+import CartContainer from "../Cart.js/CartContainer";
 const useStyles = makeStyles({
   icon: {
     color: "#fff",
@@ -27,6 +30,7 @@ const useStyles = makeStyles({
   logo: {
     width: 150,
     height: 100,
+    margin: "0 10px",
     objectFit: "contain",
   },
   loginButton: {
@@ -52,52 +56,28 @@ const useStyles = makeStyles({
       textDecoration: "none",
     },
   },
+  cartContainer: {
+    minWidth: { xs: 200, md: 400 },
+  },
 });
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: "auto",
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
 
 function NavBar({ darkMode, handleDarkMode }) {
   const classes = useStyles();
+  const theme = useTheme();
+  const [openDrawer, setOpenDrawer] = React.useState(false);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [openPopover, setOpenPopover] = React.useState(null);
 
+  const handleOpenPopover = (event) => {
+    setOpenPopover(event.currentTarget);
+  };
+
+  const handleClosePopover = () => {
+    setOpenPopover(null);
+  };
+  const open = Boolean(openPopover);
+  const id = open ? "simple-popover" : undefined;
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -106,121 +86,113 @@ function NavBar({ darkMode, handleDarkMode }) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <Link to="/">
-        <MenuItem>
-          <IconButton size="large" aria-label="cart" color="inherit">
-            <Badge badgeContent={0} color="error">
-              <HomeIcon />
-            </Badge>
-          </IconButton>
-          <p>Home</p>
-        </MenuItem>
-      </Link>
-      <Link to="/cart">
-        <MenuItem>
-          <IconButton size="large" aria-label="cart" color="inherit">
-            <Badge badgeContent={0} color="error">
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-          <p>Cart</p>
-        </MenuItem>
-      </Link>
-      <MenuItem>
-        <IconButton size="large" aria-label="notifications" color="inherit">
-          <Badge badgeContent={1} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-    </Menu>
-  );
-
+  const toggleDrawer = (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setOpenDrawer(!openDrawer);
+  };
+  const list = [
+    { text: "Colections" },
+    { text: "Men" },
+    { text: "Woman" },
+    { text: "About" },
+    { text: "Contact" },
+  ];
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
-          <Link to="/">
-            {/* <img alt="logo" src={logo} className={classes.logo} /> */}
-            <StorefrontIcon
+        <Toolbar style={{ justifyContent: "space-between" }}>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <IconButton
               size="large"
-              style={{ fill: "white", width: 100, height: 50 }}
-            />
+              aria-label="show more"
+              aria-haspopup="true"
+              onClick={toggleDrawer}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+          </Box>
+          <Link to="/">
+            <img alt="logo" src={logo} className={classes.logo} />
           </Link>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <nav>
               <ul className={classes.menuItem}>
                 <Link to="/">
-                  <li>Home</li>
+                  <li>Collections</li>
+                </Link>
+                <Link to="/">
+                  <li>Men</li>
+                </Link>
+                <Link to="/">
+                  <li>Women</li>
+                </Link>
+                <Link to="/">
+                  <li>About</li>
                 </Link>
               </ul>
             </nav>
           </Box>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-          <Box
-            sx={{ display: { xs: "none", md: "flex" } }}
-            style={{ alignItems: "center" }}
-          >
-            <Link to="/cart">
-              <IconButton
-                size="large"
-                aria-label="mails"
-                color="inherit"
-                className={classes.menuItem}
-              >
-                <Badge badgeContent={0} color="error">
-                  <ShoppingCartIcon style={{ fill: "white" }} />
-                </Badge>
-              </IconButton>
-            </Link>
-            <IconButton size="large" aria-label="notifications" color="inherit">
-              <Badge badgeContent={1} color="error">
-                <NotificationsIcon style={{ fill: "white" }} />
-              </Badge>
-            </IconButton>
-            <Switch onChange={handleDarkMode} value={darkMode} />
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+
+          <Box style={{ alignItems: "center" }}>
             <IconButton
               size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
+              aria-label="mails"
+              color="primary"
+              className={classes.menuItem}
+              onClick={handleOpenPopover}
             >
-              <MoreIcon />
+              <Badge badgeContent={0} color="error">
+                <ShoppingCartIcon style={{ fill: "white" }} />
+              </Badge>
+            </IconButton>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={openPopover}
+              onClose={handleClosePopover}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              className={classes.cartContainer}
+            >
+              <CartContainer />
+            </Popover>
+
+            <IconButton onClick={handleDarkMode}>
+              {darkMode ? (
+                <Brightness7Icon style={{ fill: "white" }} />
+              ) : (
+                <Brightness4Icon style={{ fill: "white" }} />
+              )}
             </IconButton>
           </Box>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
+      <Drawer open={openDrawer} onClose={toggleDrawer}>
+        <IconButton style={{ justifyContent: "flex-start" }}>
+          <CloseIcon />
+        </IconButton>
+        <List>
+          {list.map((menuItem, index) => (
+            <ListItem disablePadding key={index}>
+              <ListItemButton>
+                <ListItemText primary={menuItem.text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
     </Box>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Cart from "../components/Cart.js/Cart";
+import CartContainer from "../components/Cart.js/CartContainer";
 import ItemListContainer from "../components/Items/ItemListContainer";
 
 function Routes() {
@@ -10,7 +10,7 @@ function Routes() {
         <ItemListContainer greeting="Productos" />
       </Route>
       <Route path="/cart" exact>
-        <Cart />
+        <CartContainer />
       </Route>
     </Switch>
   );
