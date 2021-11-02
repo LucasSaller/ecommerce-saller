@@ -6,10 +6,11 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import ItemDetail from "./ItemDetail/ItemDetail";
 import Modal from "@mui/material/Modal";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   productImage: {
@@ -23,17 +24,14 @@ const useStyles = makeStyles({
 
 function Item({ item }) {
   const classes = useStyles();
-  const [openModal, setOpenModal] = useState(false);
   const { name, price, poster } = item;
+  const history = useHistory(); // habilitar history para redirección
 
-  const handleClose = () => {
-    setOpenModal(false);
-  };
-  const handleOpen = () => {
-    setOpenModal(true);
+  const redirectProduct = (item) => {
+    history.push(`/producto/${item.id}`);
   };
   return (
-    <div>
+    <>
       <Card
         sx={{
           maxWidth: { xs: 200, md: 300 },
@@ -74,20 +72,12 @@ function Item({ item }) {
           <IconButton>
             <ShoppingBasketIcon color="primary" />
           </IconButton>
-          <IconButton onClick={handleOpen}>
-            <MoreHorizIcon color="primary" />
-          </IconButton>
+          <Button variant="outlined" onClick={() => redirectProduct(item)}>
+            Ver mas
+          </Button>
         </CardActions>
       </Card>
-      <Modal
-        open={openModal}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <ItemDetail item={item} handleClose={handleClose} />
-      </Modal>
-    </div>
+    </>
   );
 }
 

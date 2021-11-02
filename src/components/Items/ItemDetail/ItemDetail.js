@@ -8,6 +8,7 @@ import { makeStyles, withStyles } from "@mui/styles";
 import { IconButton } from "@mui/material";
 import ItemCount from "../../ItemCount/ItemCount";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 const useStyles = makeStyles({
   productImage: {
     objectFit: "contain",
@@ -27,14 +28,15 @@ const style = {
   p: 4,
 };
 
-function ItemDetail({ item, handleClose }) {
+function ItemDetail({ item }) {
   const classes = useStyles();
   const { name, price, poster, stock, initial } = item;
+
+  const onAdd = (result) => {
+    console.log(result);
+  };
   return (
     <Card sx={style}>
-      <IconButton onClick={handleClose}>
-        <ArrowBackIcon color="primary" />
-      </IconButton>
       <CardMedia
         component="img"
         height="120"
@@ -58,7 +60,7 @@ function ItemDetail({ item, handleClose }) {
         </Typography>
       </CardContent>
       <CardActions className={classes.buttons}>
-        <ItemCount stock={stock} initial={initial} />
+        <ItemCount stock={stock} initial={initial} onAdd={onAdd} />
       </CardActions>
     </Card>
   );

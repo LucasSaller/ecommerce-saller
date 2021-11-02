@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CartItem from "../Cart.js/CartItem";
-import { Button, Grid, Paper } from "@mui/material";
+import { Button, Grid, Paper, Typography } from "@mui/material";
 function CartContainer() {
   const [cartItems, setCartItems] = useState([]);
 
@@ -13,7 +13,7 @@ function CartContainer() {
           </Button>
         </Grid>
       ) : (
-        <p>Your cart is empty.</p>
+        <Typography variant="subtitle1">Your cart is empty.</Typography>
       )}
     </>
   );

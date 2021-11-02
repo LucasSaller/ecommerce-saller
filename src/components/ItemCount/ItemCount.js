@@ -45,7 +45,11 @@ function ItemCount({ stock, initial, onAdd }) {
       {error && <Alert severity="warning">{error}</Alert>}
       <div className="contador__buttonAdd">
         <Button fullWidth variant="contained">
-          <ShoppingCartIcon style={{ marginRight: 10 }} size="medium" />
+          <ShoppingCartIcon
+            style={{ marginRight: 10 }}
+            size="medium"
+            onClick={onAdd(contador)}
+          />
           Add to Cart
         </Button>
       </div>

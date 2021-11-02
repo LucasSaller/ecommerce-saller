@@ -23,6 +23,8 @@ import ListItemText from "@mui/material/ListItemText";
 import CloseIcon from "@mui/icons-material/Close";
 import Popover from "@mui/material/Popover";
 import CartContainer from "../Cart.js/CartContainer";
+import "./NavBar.css";
+
 const useStyles = makeStyles({
   icon: {
     color: "#fff",
@@ -56,9 +58,7 @@ const useStyles = makeStyles({
       textDecoration: "none",
     },
   },
-  cartContainer: {
-    minWidth: { xs: 200, md: 400 },
-  },
+  cartContainer: {},
 });
 
 function NavBar({ darkMode, handleDarkMode }) {
