@@ -39,4 +39,6 @@
 }
 *{
   font-family: 'Kumbh Sans', sans-serif;
+  text-decoration: none;
+  color: inherit;
 }

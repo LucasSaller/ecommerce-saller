@@ -4,13 +4,22 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { makeStyles } from "@mui/styles";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { Button, IconButton } from "@mui/material";
+import { makeStyles, styled } from "@mui/styles";
+import { IconButton, Stack, Box } from "@mui/material";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import ItemDetail from "./ItemDetail/ItemDetail";
-import Modal from "@mui/material/Modal";
+
 import { useHistory } from "react-router-dom";
+import ColorPreview from "../../utils/ColorPreview";
+import { Link } from "react-router-dom";
+import Rating from "@mui/material/Rating";
+
+const ProductImgStyle = styled("img")({
+  top: 0,
+  width: "100%",
+  height: "100%",
+  objectFit: "cover",
+  position: "absolute",
+});
 
 const useStyles = makeStyles({
   productImage: {
@@ -24,58 +33,48 @@ const useStyles = makeStyles({
 
 function Item({ item }) {
   const classes = useStyles();
-  const { name, price, poster } = item;
+  const { name, price, poster, colors, valueRating } = item;
+  const [newValueRating, setNewValueRating] = useState(valueRating);
   const history = useHistory(); // habilitar history para redirección
-
   const redirectProduct = (item) => {
-    history.push(`/producto/${item.id}`);
+    history.push(`/item/${item.id}`);
   };
   return (
     <>
-      <Card
-        sx={{
-          maxWidth: { xs: 200, md: 300 },
-          minHeight: { xs: 0, md: 430 },
-          margin: "0 auto",
-          padding: 0,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
-          transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
-          "& :hover": {
-            boxShadow:
-              "box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)",
-          },
-        }}
-      >
-        <CardMedia
-          component="img"
-          height="120"
-          image={poster}
-          alt="asd"
-          className={classes.productImage}
-          sx={{ objectFit: "contain" }}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Content
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {price}
-          </Typography>
-        </CardContent>
-        <CardActions className={classes.buttons}>
-          <IconButton>
+      <Card style={{ borderRadius: 19 }}>
+        <Box sx={{ pt: "100%", position: "relative" }}>
+          <ProductImgStyle alt={name} src={poster} />
+        </Box>
+
+        <Stack spacing={2} sx={{ p: 3 }}>
+          <Link to={`/item/${item.id}`}>
+            <Typography variant="subtitle2" noWrap>
+              {name}
+            </Typography>
+          </Link>
+
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <ColorPreview colors={colors} />
+            <Typography variant="subtitle1">{price}</Typography>
+          </Stack>
+          <div>
+            <Rating
+              name="simple-controlled"
+              onChange={(newValue) => {
+                setNewValueRating(newValue);
+              }}
+              value={newValueRating}
+              style={{ zIndex: 20 }}
+            />
+          </div>
+          <IconButton edge="end">
             <ShoppingBasketIcon color="primary" />
           </IconButton>
-          <Button variant="outlined" onClick={() => redirectProduct(item)}>
-            Ver mas
-          </Button>
-        </CardActions>
+        </Stack>
       </Card>
     </>
   );

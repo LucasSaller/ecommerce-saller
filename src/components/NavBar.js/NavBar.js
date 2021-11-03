@@ -139,7 +139,7 @@ function NavBar({ darkMode, handleDarkMode }) {
             </nav>
           </Box>
 
-          <Box style={{ alignItems: "center" }}>
+          <Box style={{ alignItems: "center", display: "flex" }}>
             <IconButton
               size="large"
               aria-label="mails"

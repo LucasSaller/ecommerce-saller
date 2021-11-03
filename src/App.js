@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "./Routes/Routes";
 import React, { useState } from "react";
 import { CssBaseline } from "@mui/material";
+import ThemeConfig from "./theme";
 
 function App() {
   const [darkMode, setDarkmode] = useState(false);
@@ -31,6 +32,7 @@ function App() {
   return (
     <Router>
       <ThemeProvider theme={theme}>
+        {/* <ThemeConfig darkMode={darkMode}> */}
         <CssBaseline>
           <div className="App">
             <section className="header">
@@ -40,6 +42,7 @@ function App() {
           <Routes />
         </CssBaseline>
       </ThemeProvider>
+      {/* </ThemeConfig> */}
     </Router>
   );
 }

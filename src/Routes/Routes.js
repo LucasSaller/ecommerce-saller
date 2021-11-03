@@ -13,7 +13,7 @@ function Routes() {
       <Route path="/cart" exact>
         <CartContainer />
       </Route>
-      <Route exact path="/producto/:id">
+      <Route exact path="/item/:id">
         <ItemDetailContainer />
       </Route>
     </Switch>

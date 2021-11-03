@@ -1,13 +1,13 @@
 import React from "react";
-import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
 import { makeStyles, withStyles } from "@mui/styles";
-import { IconButton } from "@mui/material";
+import { Container, IconButton } from "@mui/material";
 import ItemCount from "../../ItemCount/ItemCount";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Card, Link, Typography, Stack } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const useStyles = makeStyles({
   productImage: {
@@ -35,6 +35,7 @@ function ItemDetail({ item }) {
   const onAdd = (result) => {
     console.log(result);
   };
+
   return (
     <Card sx={style}>
       <CardMedia
