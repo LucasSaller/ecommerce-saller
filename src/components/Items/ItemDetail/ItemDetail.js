@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -8,7 +8,7 @@ import ItemCount from "../../ItemCount/ItemCount";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Box, Card, Link, Typography, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
-
+import { useCartContext } from "../../../context/cartContext";
 const useStyles = makeStyles({
   productImage: {
     objectFit: "contain",
@@ -31,9 +31,11 @@ const style = {
 function ItemDetail({ item }) {
   const classes = useStyles();
   const { name, price, poster, stock, initial } = item;
-
+  const { cart, addItem, removeItem, clearCart, isItemInCart } =
+    useCartContext();
   const onAdd = (result) => {
-    console.log(result);
+    console.log(isItemInCart(item));
+    isItemInCart(item) ? console.log(cart) : addItem(item);
   };
 
   return (

@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import CartItem from "../Cart.js/CartItem";
-import { Button, Grid, Paper, Typography } from "@mui/material";
-function CartContainer() {
-  const [cartItems, setCartItems] = useState([]);
+import { Button, Container, Grid, Paper, Typography } from "@mui/material";
+import { useCartContext } from "../../context/cartContext";
 
+function CartContainer() {
+  const { cart, addItem, removeItem, clearCart, isItemInCart } =
+    useCartContext();
+  console.log(cart);
   return (
-    <>
-      {cartItems.length !== 0 ? (
-        <Grid container>
-          <Button fullWidth variant="outlined" style={{ margin: 10 }}>
-            Checkout
-          </Button>
-        </Grid>
-      ) : (
-        <Typography variant="subtitle1">Your cart is empty.</Typography>
-      )}
-    </>
+    <Container>
+      <Grid container>
+        {cart.length > 0 ? (
+          cart.map((cartItem, index) => {
+            <CartItem />;
+          })
+        ) : (
+          <Typography variant="subtitle1">Your cart is empty.</Typography>
+        )}
+      </Grid>
+    </Container>
   );
 }
 

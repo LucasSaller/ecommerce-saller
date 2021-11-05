@@ -22,9 +22,8 @@ function ItemDetailContainer() {
     getItem().then((result) => {
       setItem(result.find((item) => item.id === id));
       setLoading(false);
-      console.log(result);
     });
-  }, []);
+  }, [id]);
   return (
     <>
       {loading && (

@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import { makeStyles, styled } from "@mui/styles";
 import { IconButton, Stack, Box } from "@mui/material";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-
+import { useCartContext } from "../../context/cartContext";
 import { useHistory } from "react-router-dom";
 import ColorPreview from "../../utils/ColorPreview";
 import { Link } from "react-router-dom";
@@ -33,22 +33,32 @@ const useStyles = makeStyles({
 
 function Item({ item }) {
   const classes = useStyles();
-  const { name, price, poster, colors, valueRating } = item;
+  const { name, price, poster, colors, valueRating, stock } = item;
   const [newValueRating, setNewValueRating] = useState(valueRating);
   const history = useHistory(); // habilitar history para redirección
   const redirectProduct = (item) => {
     history.push(`/item/${item.id}`);
   };
+  const { cart, addItem, removeItem, clearCart, isItemInCart } =
+    useCartContext();
+  const onAdd = (result) => {
+    console.log(isItemInCart(item));
+    isItemInCart(item) ? console.log(cart) : addItem(item);
+  };
   return (
     <>
-      <Card style={{ borderRadius: 19 }}>
+      <Card elevation={4} style={{ borderRadius: 19 }}>
         <Box sx={{ pt: "100%", position: "relative" }}>
           <ProductImgStyle alt={name} src={poster} />
         </Box>
 
         <Stack spacing={2} sx={{ p: 3 }}>
           <Link to={`/item/${item.id}`}>
-            <Typography variant="subtitle2" noWrap>
+            <Typography
+              variant="subtitle2"
+              noWrap
+              style={{ fontWeight: "bold" }}
+            >
               {name}
             </Typography>
           </Link>
@@ -59,19 +69,28 @@ function Item({ item }) {
             justifyContent="space-between"
           >
             <ColorPreview colors={colors} />
-            <Typography variant="subtitle1">{price}</Typography>
+            <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
+              ${price}
+            </Typography>
           </Stack>
-          <div>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <Rating
               name="simple-controlled"
-              onChange={(newValue) => {
+              onChange={(event, newValue) => {
                 setNewValueRating(newValue);
               }}
               value={newValueRating}
               style={{ zIndex: 20 }}
             />
-          </div>
-          <IconButton edge="end">
+            <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
+              Qt: {stock}
+            </Typography>
+          </Stack>
+          <IconButton style={{ width: "fit-content" }} onClick={() => onAdd(2)}>
             <ShoppingBasketIcon color="primary" />
           </IconButton>
         </Stack>

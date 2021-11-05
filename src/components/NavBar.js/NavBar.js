@@ -5,11 +5,8 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import HomeIcon from "@mui/icons-material/Home";
-import { makeStyles, useTheme } from "@mui/styles";
-import { withRouter, Link } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
+import { Link, NavLink } from "react-router-dom";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import logo from "../../assets/logo.svg";
@@ -18,12 +15,12 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import CloseIcon from "@mui/icons-material/Close";
 import Popover from "@mui/material/Popover";
 import CartContainer from "../Cart.js/CartContainer";
 import "./NavBar.css";
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles({
   icon: {
@@ -60,13 +57,18 @@ const useStyles = makeStyles({
   },
   cartContainer: {},
 });
-
+const categories = [
+  { text: "All" },
+  { text: "Men" },
+  { text: "Woman" },
+  { text: "Other" },
+  { text: "Other2" },
+];
 function NavBar({ darkMode, handleDarkMode }) {
   const classes = useStyles();
-  const theme = useTheme();
+  const { categoryId } = useParams();
+  console.log(categoryId);
   const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [openPopover, setOpenPopover] = React.useState(null);
 
   const handleOpenPopover = (event) => {
@@ -78,13 +80,6 @@ function NavBar({ darkMode, handleDarkMode }) {
   };
   const open = Boolean(openPopover);
   const id = open ? "simple-popover" : undefined;
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
 
   const toggleDrawer = (event) => {
     if (
@@ -95,13 +90,7 @@ function NavBar({ darkMode, handleDarkMode }) {
     }
     setOpenDrawer(!openDrawer);
   };
-  const list = [
-    { text: "Colections" },
-    { text: "Men" },
-    { text: "Woman" },
-    { text: "About" },
-    { text: "Contact" },
-  ];
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -123,18 +112,18 @@ function NavBar({ darkMode, handleDarkMode }) {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <nav>
               <ul className={classes.menuItem}>
-                <Link to="/">
-                  <li>Collections</li>
-                </Link>
-                <Link to="/">
-                  <li>Men</li>
-                </Link>
-                <Link to="/">
-                  <li>Women</li>
-                </Link>
-                <Link to="/">
-                  <li>About</li>
-                </Link>
+                {categories.map((menuItem, index) => (
+                  <NavLink
+                    to={`/category/${index}`}
+                    activeClassName="activeMenu"
+                  >
+                    <ListItem disablePadding key={index}>
+                      <ListItemButton style={{ borderRadius: 10 }}>
+                        <ListItemText primary={menuItem.text} />
+                      </ListItemButton>
+                    </ListItem>
+                  </NavLink>
+                ))}
               </ul>
             </nav>
           </Box>
@@ -184,16 +173,18 @@ function NavBar({ darkMode, handleDarkMode }) {
           <CloseIcon />
         </IconButton>
         <List>
-          {list.map((menuItem, index) => (
-            <ListItem disablePadding key={index}>
-              <ListItemButton>
-                <ListItemText primary={menuItem.text} />
-              </ListItemButton>
-            </ListItem>
+          {categories.map((menuItem, index) => (
+            <Link to={`/category/${index}`}>
+              <ListItem disablePadding key={index}>
+                <ListItemButton>
+                  <ListItemText primary={menuItem.text} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
           ))}
         </List>
       </Drawer>
     </Box>
   );
 }
-export default withRouter(NavBar);
+export default NavBar;

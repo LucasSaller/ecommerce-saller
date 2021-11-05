@@ -16,6 +16,9 @@ function Routes() {
       <Route exact path="/item/:id">
         <ItemDetailContainer />
       </Route>
+      <Route exact path="/category/:categoryId">
+        <ItemListContainer greeting="Productos" />
+      </Route>
     </Switch>
   );
 }
