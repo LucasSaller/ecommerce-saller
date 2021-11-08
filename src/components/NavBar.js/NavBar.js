@@ -67,7 +67,7 @@ const categories = [
 function NavBar({ darkMode, handleDarkMode }) {
   const classes = useStyles();
   const { categoryId } = useParams();
-  console.log(categoryId);
+
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [openPopover, setOpenPopover] = React.useState(null);
 
@@ -114,10 +114,11 @@ function NavBar({ darkMode, handleDarkMode }) {
               <ul className={classes.menuItem}>
                 {categories.map((menuItem, index) => (
                   <NavLink
+                    key={index}
                     to={`/category/${index}`}
                     activeClassName="activeMenu"
                   >
-                    <ListItem disablePadding key={index}>
+                    <ListItem disablePadding>
                       <ListItemButton style={{ borderRadius: 10 }}>
                         <ListItemText primary={menuItem.text} />
                       </ListItemButton>
@@ -129,20 +130,22 @@ function NavBar({ darkMode, handleDarkMode }) {
           </Box>
 
           <Box style={{ alignItems: "center", display: "flex" }}>
-            <IconButton
-              size="large"
-              aria-label="mails"
-              color="primary"
-              className={classes.menuItem}
-              onClick={handleOpenPopover}
-            >
-              <Badge badgeContent={0} color="error">
-                <ShoppingCartIcon style={{ fill: "white" }} />
-              </Badge>
-            </IconButton>
+            <NavLink to="/cart">
+              <IconButton
+                size="large"
+                aria-label="mails"
+                color="primary"
+                className={classes.menuItem}
+                onClick={handleOpenPopover}
+              >
+                <Badge badgeContent={0} color="error">
+                  <ShoppingCartIcon style={{ fill: "white" }} />
+                </Badge>
+              </IconButton>
+            </NavLink>
             <Popover
               id={id}
-              open={open}
+              open={false}
               anchorEl={openPopover}
               onClose={handleClosePopover}
               anchorOrigin={{
@@ -174,7 +177,7 @@ function NavBar({ darkMode, handleDarkMode }) {
         </IconButton>
         <List>
           {categories.map((menuItem, index) => (
-            <Link to={`/category/${index}`}>
+            <Link key={index} to={`/category/${index}`}>
               <ListItem disablePadding key={index}>
                 <ListItemButton>
                   <ListItemText primary={menuItem.text} />

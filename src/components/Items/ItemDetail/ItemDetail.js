@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -6,9 +6,10 @@ import { makeStyles, withStyles } from "@mui/styles";
 import { Container, IconButton } from "@mui/material";
 import ItemCount from "../../ItemCount/ItemCount";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Box, Card, Link, Typography, Stack } from "@mui/material";
+import { Button, Box, Card, Typography, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useCartContext } from "../../../context/cartContext";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles({
   productImage: {
     objectFit: "contain",
@@ -30,12 +31,17 @@ const style = {
 
 function ItemDetail({ item }) {
   const classes = useStyles();
+  const [quantity, setQuantity] = useState(null);
+  const [itemCount, setItemCount] = useState(true);
   const { name, price, poster, stock, initial } = item;
   const { cart, addItem, removeItem, clearCart, isItemInCart } =
     useCartContext();
+
   const onAdd = (result) => {
-    console.log(isItemInCart(item));
-    isItemInCart(item) ? console.log(cart) : addItem(item);
+    addItem(item);
+    setQuantity(quantity);
+    //isItemInCart(item) ? setQuantity(result) : addItem(item);
+    setItemCount(false);
   };
 
   return (
@@ -63,7 +69,13 @@ function ItemDetail({ item }) {
         </Typography>
       </CardContent>
       <CardActions className={classes.buttons}>
-        <ItemCount stock={stock} initial={initial} onAdd={onAdd} />
+        {itemCount ? (
+          <ItemCount stock={stock} initial={initial} onAdd={onAdd} />
+        ) : (
+          <Link to="/cart">
+            <Button> Terminar Compra </Button>
+          </Link>
+        )}
       </CardActions>
     </Card>
   );

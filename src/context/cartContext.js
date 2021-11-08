@@ -7,11 +7,14 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
   const addItem = (item) => {
-    setCart([...cart, item]);
+    console.log(cart);
+    isItemInCart(item)
+      ? console.log("El item ya esta en el carrito")
+      : setCart([...cart, item]);
   };
 
   const removeItem = (itemId) => {
-    setCart(...cart.filter((item) => item.id !== itemId));
+    setCart([...cart.filter((item) => item.id !== itemId)]);
   };
 
   const clearCart = () => {
@@ -19,7 +22,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const isItemInCart = (item) => {
-    return cart.includes((cartItem) => item.id === cartItem.id);
+    return cart.some((cartItem) => item.id === cartItem.id);
   };
   return (
     <CartContext.Provider

@@ -19,6 +19,9 @@ function Routes() {
       <Route exact path="/category/:categoryId">
         <ItemListContainer greeting="Productos" />
       </Route>
+      <Route exact path="/cart">
+        <CartContainer />
+      </Route>
     </Switch>
   );
 }

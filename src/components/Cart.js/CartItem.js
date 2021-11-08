@@ -3,12 +3,13 @@ import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
-import { Button, Grid, IconButton } from "@mui/material";
+import { Button, Grid, IconButton, Stack } from "@mui/material";
 import { Box } from "@mui/system";
 import ItemCount from "../ItemCount/ItemCount";
 import producto from "../../assets/producto1.jpeg";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Divider from "@mui/material/Divider";
+import { useCartContext } from "../../context/cartContext";
 
 import "./Cart.css";
 const Img = styled("img")({
@@ -17,61 +18,65 @@ const Img = styled("img")({
   maxWidth: "100%",
   maxHeight: "100%",
 });
-function CartItem() {
+function CartItem({ item }) {
+  const { name, price, poster, colors, valueRating, stock, id } = item;
+  const { cart, addItem, removeItem, clearCart, isItemInCart } =
+    useCartContext();
   return (
     <>
       <div className="cart__container">
-        <h4 className="cart__title">Cart</h4>
-        <Divider />
-        <Grid container>
-          <Grid item md={12} xs={12}>
-            <Paper sx={{ p: 2, margin: "auto", flexGrow: 1 }} elevation={0}>
-              <Grid container spacing={2}>
-                <Grid item>
-                  <ButtonBase sx={{ width: 128, height: 128 }}>
-                    <Img alt="complex" src={producto} />
-                  </ButtonBase>
-                </Grid>
-                <Grid item xs={12} sm container>
-                  <Grid item xs container direction="column" spacing={2}>
-                    <Grid item xs>
-                      <Typography
-                        gutterBottom
-                        variant="subtitle1"
-                        component="div"
-                      >
-                        Nike air
-                      </Typography>
-                      <Typography variant="body2" gutterBottom>
-                        asdads
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        ID: 1030114
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    item
-                    display="flex"
-                    justifyContent="space-between"
-                    flexDirection="column"
-                  >
-                    <Typography
-                      variant="subtitle1"
-                      component="div"
-                      style={{ fontWeight: "bold" }}
-                    >
-                      $19.00
-                    </Typography>
-                    <IconButton>
-                      <DeleteIcon color="primary" />
-                    </IconButton>
-                  </Grid>
+        <Paper sx={{ p: 2, margin: "auto", flexGrow: 1 }} elevation={0}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={2}>
+              <ButtonBase sx={{ width: 128, height: 128 }}>
+                <Img alt="complex" src={poster} />
+              </ButtonBase>
+            </Grid>
+            <Grid item xs={12} sm container>
+              <Grid item xs container direction="column" spacing={2}>
+                <Grid item xs>
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    {name}
+                  </Typography>
+                  <Typography variant="body2" gutterBottom>
+                    {price}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    ID: {id}
+                  </Typography>
                 </Grid>
               </Grid>
-            </Paper>
+            </Grid>
+            <Grid
+              item
+              display="flex"
+              justifyContent="space-between"
+              flexDirection="row"
+              xs={12}
+              md={2}
+              alignItems="center"
+            >
+              <Typography
+                variant="subtitle1"
+                component="div"
+                style={{ fontWeight: "bold" }}
+              >
+                ${price}
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                component="div"
+                style={{ fontWeight: "bold" }}
+              >
+                {stock}
+              </Typography>
+              <IconButton onClick={() => removeItem(id)}>
+                <DeleteIcon color="error" />
+              </IconButton>
+            </Grid>
           </Grid>
-        </Grid>
+        </Paper>
+        <Divider />
       </div>
     </>
   );

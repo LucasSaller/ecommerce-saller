@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 
 function Item({ item }) {
   const classes = useStyles();
-  const { name, price, poster, colors, valueRating, stock } = item;
+  const { name, price, poster, colors, valueRating, stock, id } = item;
   const [newValueRating, setNewValueRating] = useState(valueRating);
   const history = useHistory(); // habilitar history para redirección
   const redirectProduct = (item) => {
@@ -42,8 +42,7 @@ function Item({ item }) {
   const { cart, addItem, removeItem, clearCart, isItemInCart } =
     useCartContext();
   const onAdd = (result) => {
-    console.log(isItemInCart(item));
-    isItemInCart(item) ? console.log(cart) : addItem(item);
+    addItem(item);
   };
   return (
     <>
