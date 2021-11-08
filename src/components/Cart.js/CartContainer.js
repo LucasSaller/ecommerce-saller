@@ -46,6 +46,9 @@ function CartContainer() {
         ) : (
           <Typography variant="subtitle1">Your cart is empty.</Typography>
         )}
+        {cart.length > 0 && (
+          <Button onClick={() => clearCart()}> Remover Todos </Button>
+        )}
       </Grid>
       <Grid item xs={12} md={4}></Grid>
 
