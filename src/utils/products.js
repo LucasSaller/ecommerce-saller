@@ -51,7 +51,7 @@ const products = [...Array(24)].map((_, index) => {
     id: faker.datatype.uuid(),
     poster: mockImgProduct(imgIndex),
     name: PRODUCT_NAME[index],
-    price: faker.datatype.number({ min: 4, max: 99, precision: 0.01 }),
+    price: faker.datatype.number({ min: 4, max: 99, precision: 1 }),
     priceSale:
       imgIndex % 3
         ? null
@@ -69,6 +69,7 @@ const products = [...Array(24)].map((_, index) => {
     categoryId: faker.datatype.number({ min: 1, max: 4 }),
     initial: 1,
     valueRating: faker.datatype.number(5),
+    quantity: 0,
   };
 });
 export default products;

@@ -1,11 +1,11 @@
 .contador__controles{
     display: flex;
-    justify-content: space-evenly;
+    gap:10px;
+    align-items: center;
 }
 .contador__container{
-    max-width: 300px;
-    margin: 0 auto;
-
+display: flex;
+align-items: center;
 }
 .contador__buttonAdd button{
     border-radius: 1;

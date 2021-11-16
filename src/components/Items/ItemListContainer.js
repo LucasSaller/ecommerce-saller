@@ -7,29 +7,42 @@ import PRODUCTS from "../../utils/products";
 import Item from "./Item";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+import { getFirestore } from "../../firebase";
 function ItemListContainer({ greeting }) {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState(0);
 
   const { categoryId } = useParams();
 
   useEffect(() => {
-    const task = new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(PRODUCTS);
-      }, 3000);
-    });
+    const db = getFirestore();
 
-    task.then(
-      (result) => {
-        setProducts(result);
-        setFilteredProducts(result);
-        setLoading(false);
-      },
-      (error) => {}
-    );
+    async function fetchData() {
+      const querySnapshot = await getDocs(collection(db, "items"));
+      const items = querySnapshot.docs.map((doc) => doc.data());
+      setProducts(items);
+      setFilteredProducts(items);
+      setLoading(false);
+      setTimeout(() => {}, 1000);
+    }
+
+    // const task = new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     resolve(PRODUCTS);
+    //   }, 500);
+    // });
+
+    // task.then(
+    //   (result) => {
+    //     setProducts(result);
+    //     setFilteredProducts(result);
+    //     setLoading(false);
+    //   },
+    //   (error) => {}
+    // );
+    fetchData();
   }, []);
 
   useEffect(() => {

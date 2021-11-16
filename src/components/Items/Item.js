@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { makeStyles, styled } from "@mui/styles";
-import { IconButton, Stack, Box } from "@mui/material";
+import { IconButton, Stack, Box, Snackbar, Alert } from "@mui/material";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { useCartContext } from "../../context/cartContext";
-import { useHistory } from "react-router-dom";
+import { useErrorContext } from "../../context/errorContext";
 import ColorPreview from "../../utils/ColorPreview";
 import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
@@ -33,19 +30,35 @@ const useStyles = makeStyles({
 
 function Item({ item }) {
   const classes = useStyles();
-  const { name, price, poster, colors, valueRating, stock, id } = item;
+  const { name, price, poster, colors, valueRating, quantity } = item;
   const [newValueRating, setNewValueRating] = useState(valueRating);
-  const history = useHistory(); // habilitar history para redirección
-  const redirectProduct = (item) => {
-    history.push(`/item/${item.id}`);
-  };
+
   const { cart, addItem, removeItem, clearCart, isItemInCart } =
     useCartContext();
+
+  const { snackbar, setSnackbar } = useErrorContext();
   const onAdd = (result) => {
-    addItem(item);
+    addItem(item, quantity);
+    setSnackbar(true);
+  };
+  const handleCloseSnackbar = () => {
+    setSnackbar(false);
   };
   return (
     <>
+      <Snackbar
+        open={snackbar}
+        autoHideDuration={2000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Succesfully added to cart!
+        </Alert>
+      </Snackbar>
       <Card elevation={4} style={{ borderRadius: 19 }}>
         <Box sx={{ pt: "100%", position: "relative" }}>
           <ProductImgStyle alt={name} src={poster} />
@@ -86,10 +99,10 @@ function Item({ item }) {
               style={{ zIndex: 20 }}
             />
             <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
-              Qt: {stock}
+              Qt: {quantity}
             </Typography>
           </Stack>
-          <IconButton style={{ width: "fit-content" }} onClick={() => onAdd(2)}>
+          <IconButton style={{ width: "fit-content" }} onClick={() => onAdd()}>
             <ShoppingBasketIcon color="primary" />
           </IconButton>
         </Stack>

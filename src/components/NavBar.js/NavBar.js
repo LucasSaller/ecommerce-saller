@@ -21,6 +21,7 @@ import Popover from "@mui/material/Popover";
 import CartContainer from "../Cart.js/CartContainer";
 import "./NavBar.css";
 import { useParams } from "react-router-dom";
+import { useCartContext } from "../../context/cartContext";
 
 const useStyles = makeStyles({
   icon: {
@@ -31,6 +32,7 @@ const useStyles = makeStyles({
     height: 100,
     margin: "0 10px",
     objectFit: "contain",
+    marginRight: "auto",
   },
   loginButton: {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -55,7 +57,10 @@ const useStyles = makeStyles({
       textDecoration: "none",
     },
   },
-  cartContainer: {},
+  navRight: {
+    display: "flex",
+    float: "right",
+  },
 });
 const categories = [
   { text: "All" },
@@ -65,6 +70,8 @@ const categories = [
   { text: "Other2" },
 ];
 function NavBar({ darkMode, handleDarkMode }) {
+  const { cart } = useCartContext();
+
   const classes = useStyles();
   const { categoryId } = useParams();
 
@@ -94,7 +101,7 @@ function NavBar({ darkMode, handleDarkMode }) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar style={{ justifyContent: "space-between" }}>
+        <Toolbar style={{ justifyContent: "flex-start" }}>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -106,69 +113,77 @@ function NavBar({ darkMode, handleDarkMode }) {
               <MenuIcon />
             </IconButton>
           </Box>
-          <Link to="/">
+          <Link to="/" style={{ marginRight: "auto" }}>
             <img alt="logo" src={logo} className={classes.logo} />
           </Link>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <nav>
-              <ul className={classes.menuItem}>
-                {categories.map((menuItem, index) => (
-                  <NavLink
-                    key={index}
-                    to={`/category/${index}`}
-                    activeClassName="activeMenu"
-                  >
-                    <ListItem disablePadding>
-                      <ListItemButton style={{ borderRadius: 10 }}>
-                        <ListItemText primary={menuItem.text} />
-                      </ListItemButton>
-                    </ListItem>
-                  </NavLink>
-                ))}
-              </ul>
-            </nav>
-          </Box>
+          <div className={classes.navRight}>
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <nav>
+                <ul className={classes.menuItem}>
+                  {categories.map((menuItem, index) => (
+                    <NavLink
+                      key={index}
+                      to={`/category/${index}`}
+                      activeClassName="activeMenu"
+                    >
+                      <ListItem disablePadding>
+                        <ListItemButton style={{ borderRadius: 10 }}>
+                          <ListItemText primary={menuItem.text} />
+                        </ListItemButton>
+                      </ListItem>
+                    </NavLink>
+                  ))}
+                </ul>
+              </nav>
+            </Box>
 
-          <Box style={{ alignItems: "center", display: "flex" }}>
-            <NavLink to="/cart">
-              <IconButton
-                size="large"
-                aria-label="mails"
-                color="primary"
-                className={classes.menuItem}
-                onClick={handleOpenPopover}
-              >
-                <Badge badgeContent={0} color="error">
-                  <ShoppingCartIcon style={{ fill: "white" }} />
-                </Badge>
-              </IconButton>
-            </NavLink>
-            <Popover
-              id={id}
-              open={false}
-              anchorEl={openPopover}
-              onClose={handleClosePopover}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
+            <Box
+              style={{
+                alignItems: "center",
+                display: "flex",
+                justifyContent: "flex-end",
               }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              className={classes.cartContainer}
             >
-              <CartContainer />
-            </Popover>
+              <NavLink to="/cart">
+                <IconButton
+                  size="large"
+                  aria-label="mails"
+                  color="primary"
+                  className={classes.menuItem}
+                  onClick={handleOpenPopover}
+                >
+                  <Badge badgeContent={cart.length} color="error">
+                    <ShoppingCartIcon style={{ fill: "white" }} />
+                  </Badge>
+                </IconButton>
+              </NavLink>
+              <Popover
+                id={id}
+                open={false}
+                anchorEl={openPopover}
+                onClose={handleClosePopover}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                className={classes.cartContainer}
+              >
+                <CartContainer />
+              </Popover>
 
-            <IconButton onClick={handleDarkMode}>
-              {darkMode ? (
-                <Brightness7Icon style={{ fill: "white" }} />
-              ) : (
-                <Brightness4Icon style={{ fill: "white" }} />
-              )}
-            </IconButton>
-          </Box>
+              <IconButton onClick={handleDarkMode}>
+                {darkMode ? (
+                  <Brightness7Icon style={{ fill: "white" }} />
+                ) : (
+                  <Brightness4Icon style={{ fill: "white" }} />
+                )}
+              </IconButton>
+            </Box>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer open={openDrawer} onClose={toggleDrawer}>

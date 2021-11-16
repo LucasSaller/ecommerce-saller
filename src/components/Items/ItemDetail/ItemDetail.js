@@ -31,15 +31,15 @@ const style = {
 
 function ItemDetail({ item }) {
   const classes = useStyles();
-  const [quantity, setQuantity] = useState(null);
+  const [quantity2, setQuantity] = useState(null);
   const [itemCount, setItemCount] = useState(true);
-  const { name, price, poster, stock, initial } = item;
+  const { name, price, poster, stock, initial, quantity } = item;
   const { cart, addItem, removeItem, clearCart, isItemInCart } =
     useCartContext();
 
   const onAdd = (result) => {
-    addItem(item);
-    setQuantity(quantity);
+    addItem(item, result);
+    setQuantity(quantity2);
     //isItemInCart(item) ? setQuantity(result) : addItem(item);
     setItemCount(false);
   };
@@ -70,7 +70,12 @@ function ItemDetail({ item }) {
       </CardContent>
       <CardActions className={classes.buttons}>
         {itemCount ? (
-          <ItemCount stock={stock} initial={initial} onAdd={onAdd} />
+          <ItemCount
+            item={item}
+            stock={stock}
+            initial={initial}
+            onAdd={onAdd}
+          />
         ) : (
           <Link to="/cart">
             <Button> Terminar Compra </Button>
