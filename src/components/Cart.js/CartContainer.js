@@ -5,11 +5,13 @@ import { useCartContext } from "../../context/cartContext";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/system";
-
+import Form from "./Form";
+import { addDoc, updateDoc, collection } from "firebase/firestore";
+import { getFirestore } from "../../firebase";
 function CartContainer() {
-  const { cart, addItem, removeItem, clearCart, isItemInCart } =
-    useCartContext();
+  const { cart, clearCart } = useCartContext();
   const [total, setTotal] = useState(0);
+
   useEffect(() => {
     const sumTotal = (cartList) => {
       return [...cartList]
@@ -23,6 +25,17 @@ function CartContainer() {
     }
     setTotal(sumTotal(cart));
   }, [cart]);
+
+  const handleSubmit = (formData) => {
+    const db = getFirestore();
+    const orders = collection(db, "orders");
+    const newOrder = {
+      buyer: formData,
+      items: [...cart],
+      total,
+    };
+    addDoc(orders, newOrder).then(({ id }) => console.log(id));
+  };
 
   return (
     <>
@@ -38,7 +51,7 @@ function CartContainer() {
               Shopping Cart
             </Typography>
 
-            <Grid container spacing={1}>
+            <Grid container spacing={0} py={2}>
               {cart && cart.length > 0 ? (
                 cart.map((cartItem, index) => {
                   return (
@@ -51,19 +64,25 @@ function CartContainer() {
                 <Typography variant="subtitle1">Your cart is empty.</Typography>
               )}
             </Grid>
+            <Box display="flex" gap="20px">
+              {cart.length > 0 && (
+                <Button
+                  style={{ marginRight: "auto" }}
+                  onClick={() => clearCart()}
+                >
+                  Remover Todos
+                </Button>
+              )}
+              <Link to="/">
+                <Button variant="outlined">Volver a comprar</Button>
+              </Link>
+            </Box>
           </Grid>
           <Grid item xs={12} md={10}>
-            <Box sx={{ p: 4 }}>
+            <Box my={5}>
               <Typography variant="h4">Total: ${total}</Typography>
+              <Form handleSubmit={handleSubmit} />
             </Box>
-            {cart.length > 0 && (
-              <Button m="20xp" onClick={() => clearCart()}>
-                Remover Todos
-              </Button>
-            )}
-            <Link to="/">
-              <Button variant="outlined">Volver a comprar</Button>
-            </Link>
           </Grid>
         </Grid>
       </Container>

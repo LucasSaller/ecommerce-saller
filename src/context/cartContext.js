@@ -1,24 +1,37 @@
 import React, { createContext, useContext, useState } from "react";
+import { useErrorContext } from "./errorContext";
 
 const CartContext = createContext({});
 export const useCartContext = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
-  const [snackbar, setSnackbar] = useState(false);
+  const { snackbar, setSnackbar, setError } = useErrorContext();
 
+  const maximoStock = (quantity, stock) => {
+    return Math.min(quantity, stock);
+  };
   const addQuantity = (itemToModify, quantityToAdd) => {
-    const quantityCheck = quantityToAdd ? quantityToAdd : 1;
+    if (itemToModify.quantity + quantityToAdd > itemToModify.stock) {
+      setError("No hay mas stock de este producto");
+      return;
+    }
     return cart.map((item) =>
       item.id === itemToModify.id
-        ? { ...item, quantity: item.quantity + quantityCheck }
+        ? {
+            ...item,
+            quantity: maximoStock(item.quantity + quantityToAdd, item.stock),
+          }
         : item
     );
   };
   const addItem = (item, quantityToAdd) => {
-    isItemInCart(item)
-      ? setCart(addQuantity(item, quantityToAdd))
-      : setCart([...cart, { ...item, quantity: 1 }]);
+    if (isItemInCart(item)) {
+      setCart(addQuantity(item, quantityToAdd));
+    } else {
+      setCart([...cart, { ...item, quantity: quantityToAdd }]);
+      console.log("entre al else");
+    }
   };
 
   const removeItem = (itemId) => {
@@ -33,6 +46,10 @@ export const CartProvider = ({ children }) => {
     return cart.some((cartItem) => item.id === cartItem.id);
   };
 
+  const findItemInCart = (item) => {
+    return cart.find((cartItem) => item.id === cartItem.id);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -41,8 +58,7 @@ export const CartProvider = ({ children }) => {
         removeItem,
         clearCart,
         isItemInCart,
-        snackbar,
-        setSnackbar,
+        findItemInCart,
         addQuantity,
       }}
     >

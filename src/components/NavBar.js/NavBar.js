@@ -17,11 +17,10 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import CloseIcon from "@mui/icons-material/Close";
-import Popover from "@mui/material/Popover";
-import CartContainer from "../Cart.js/CartContainer";
 import "./NavBar.css";
 import { useParams } from "react-router-dom";
 import { useCartContext } from "../../context/cartContext";
+import { Container } from "@mui/material";
 
 const useStyles = makeStyles({
   icon: {
@@ -73,20 +72,9 @@ function NavBar({ darkMode, handleDarkMode }) {
   const { cart } = useCartContext();
 
   const classes = useStyles();
-  const { categoryId } = useParams();
+  //const { categoryId } = useParams();
 
   const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [openPopover, setOpenPopover] = React.useState(null);
-
-  const handleOpenPopover = (event) => {
-    setOpenPopover(event.currentTarget);
-  };
-
-  const handleClosePopover = () => {
-    setOpenPopover(null);
-  };
-  const open = Boolean(openPopover);
-  const id = open ? "simple-popover" : undefined;
 
   const toggleDrawer = (event) => {
     if (
@@ -95,6 +83,10 @@ function NavBar({ darkMode, handleDarkMode }) {
     ) {
       return;
     }
+    setOpenDrawer(!openDrawer);
+  };
+
+  const handleDrawer = () => {
     setOpenDrawer(!openDrawer);
   };
 
@@ -150,30 +142,12 @@ function NavBar({ darkMode, handleDarkMode }) {
                   aria-label="mails"
                   color="primary"
                   className={classes.menuItem}
-                  onClick={handleOpenPopover}
                 >
                   <Badge badgeContent={cart.length} color="error">
                     <ShoppingCartIcon style={{ fill: "white" }} />
                   </Badge>
                 </IconButton>
               </NavLink>
-              <Popover
-                id={id}
-                open={false}
-                anchorEl={openPopover}
-                onClose={handleClosePopover}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                className={classes.cartContainer}
-              >
-                <CartContainer />
-              </Popover>
 
               <IconButton onClick={handleDarkMode}>
                 {darkMode ? (
@@ -187,20 +161,25 @@ function NavBar({ darkMode, handleDarkMode }) {
         </Toolbar>
       </AppBar>
       <Drawer open={openDrawer} onClose={toggleDrawer}>
-        <IconButton style={{ justifyContent: "flex-start" }}>
+        <IconButton
+          style={{ justifyContent: "flex-start" }}
+          onClick={handleDrawer}
+        >
           <CloseIcon />
         </IconButton>
-        <List>
-          {categories.map((menuItem, index) => (
-            <Link key={index} to={`/category/${index}`}>
-              <ListItem disablePadding key={index}>
-                <ListItemButton>
-                  <ListItemText primary={menuItem.text} />
-                </ListItemButton>
-              </ListItem>
-            </Link>
-          ))}
-        </List>
+        <Container>
+          <List>
+            {categories.map((menuItem, index) => (
+              <Link key={index} to={`/category/${index}`}>
+                <ListItem disablePadding key={index}>
+                  <ListItemButton onClick={handleDrawer}>
+                    <ListItemText primary={menuItem.text} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            ))}
+          </List>
+        </Container>
       </Drawer>
     </Box>
   );

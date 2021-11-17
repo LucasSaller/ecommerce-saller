@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
-import data from "../../dummy/data.json";
-import { Button, Container, Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import "./ItemListContainer.css";
-import { Stack } from "@mui/material";
-import PRODUCTS from "../../utils/products";
 import Item from "./Item";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { getFirestore } from "../../firebase";
 function ItemListContainer({ greeting }) {
   const [products, setProducts] = useState([]);
@@ -25,36 +22,34 @@ function ItemListContainer({ greeting }) {
       setProducts(items);
       setFilteredProducts(items);
       setLoading(false);
-      setTimeout(() => {}, 1000);
     }
 
-    // const task = new Promise((resolve) => {
-    //   setTimeout(() => {
-    //     resolve(PRODUCTS);
-    //   }, 500);
-    // });
-
-    // task.then(
-    //   (result) => {
-    //     setProducts(result);
-    //     setFilteredProducts(result);
-    //     setLoading(false);
-    //   },
-    //   (error) => {}
-    // );
     fetchData();
   }, []);
 
   useEffect(() => {
-    if (categoryId && parseInt(categoryId) !== 0) {
-      setFilteredProducts(
-        [...products].filter(
-          (product) => product.categoryId === parseInt(categoryId)
-        )
-      );
-    } else if (categoryId) {
-      setFilteredProducts(products);
+    const db = getFirestore();
+
+    async function fetchCategory() {
+      // Si es una categoria en especial
+      if (categoryId && parseInt(categoryId) !== 0) {
+        const q = query(
+          collection(db, "items"),
+          where("categoryId", "==", parseInt(categoryId))
+        );
+        const querySnapshot = await getDocs(q);
+        const items = querySnapshot.docs.map((doc) => doc.data());
+        setFilteredProducts(items);
+      } else {
+        // si es all
+        const querySnapshot = await getDocs(collection(db, "items"));
+        const items = querySnapshot.docs.map((doc) => doc.data());
+        setProducts(items);
+        setFilteredProducts(items);
+        setLoading(false);
+      }
     }
+    fetchCategory();
   }, [categoryId, products]);
 
   return (

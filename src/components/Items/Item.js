@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
-import { makeStyles, styled } from "@mui/styles";
+import { styled } from "@mui/styles";
 import { IconButton, Stack, Box, Snackbar, Alert } from "@mui/material";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { useCartContext } from "../../context/cartContext";
@@ -18,27 +18,15 @@ const ProductImgStyle = styled("img")({
   position: "absolute",
 });
 
-const useStyles = makeStyles({
-  productImage: {
-    objectFit: "contain",
-    height: "100%",
-  },
-  buttons: {
-    justifyContent: "space-around",
-  },
-});
-
 function Item({ item }) {
-  const classes = useStyles();
   const { name, price, poster, colors, valueRating, quantity } = item;
   const [newValueRating, setNewValueRating] = useState(valueRating);
 
-  const { cart, addItem, removeItem, clearCart, isItemInCart } =
-    useCartContext();
+  const { addItem } = useCartContext();
 
   const { snackbar, setSnackbar } = useErrorContext();
-  const onAdd = (result) => {
-    addItem(item, quantity);
+  const onAdd = () => {
+    addItem(item, 1);
     setSnackbar(true);
   };
   const handleCloseSnackbar = () => {
