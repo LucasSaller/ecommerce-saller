@@ -33,6 +33,7 @@ function CartContainer() {
       buyer: formData,
       items: [...cart],
       total,
+      date: Date.now(),
     };
     addDoc(orders, newOrder).then(({ id }) => console.log(id));
   };
@@ -81,7 +82,11 @@ function CartContainer() {
           <Grid item xs={12} md={10}>
             <Box my={5}>
               <Typography variant="h4">Total: ${total}</Typography>
-              <Form handleSubmit={handleSubmit} />
+              <Box py={4}>
+                <Typography variant="h4">Order Details</Typography>
+
+                <Form handleSubmit={handleSubmit} />
+              </Box>
             </Box>
           </Grid>
         </Grid>
