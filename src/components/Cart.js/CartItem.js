@@ -21,8 +21,8 @@ function CartItem({ item }) {
   return (
     <>
       <div className="cart__container" style={{ borderRadius: "20px" }}>
-        <Card elevation={4} sx={{ display: "flex", minHeight: "150px" }}>
-          <Grid container display="flex">
+        <Card elevation={4} sx={{ minHeight: "150px" }}>
+          <Grid container flexWrap="nowrap">
             <CardMedia
               component="img"
               sx={{ width: { xs: "100px", md: "151px" } }}

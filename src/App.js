@@ -7,7 +7,6 @@ import React, { useState } from "react";
 import { CssBaseline } from "@mui/material";
 import { CartProvider } from "./context/cartContext";
 import { ErrorProvider } from "./context/errorContext";
-import { ProductProvider } from "./context/productContex";
 function App() {
   const [darkMode, setDarkmode] = useState(false);
   const primaryColor = darkMode ? "#85c4ef" : "#ff7d1a";
@@ -32,27 +31,22 @@ function App() {
     setDarkmode(!darkMode);
   };
   return (
-    <ProductProvider>
-      <ErrorProvider>
-        <CartProvider>
-          <Router>
-            <ThemeProvider theme={theme}>
-              <CssBaseline>
-                <div className="App">
-                  <section className="header">
-                    <NavBar
-                      darkMode={darkMode}
-                      handleDarkMode={handleDarkMode}
-                    />
-                  </section>
-                </div>
-                <Routes />
-              </CssBaseline>
-            </ThemeProvider>
-          </Router>
-        </CartProvider>
-      </ErrorProvider>
-    </ProductProvider>
+    <ErrorProvider>
+      <CartProvider>
+        <Router>
+          <ThemeProvider theme={theme}>
+            <CssBaseline>
+              <div className="App">
+                <section className="header">
+                  <NavBar darkMode={darkMode} handleDarkMode={handleDarkMode} />
+                </section>
+              </div>
+              <Routes />
+            </CssBaseline>
+          </ThemeProvider>
+        </Router>
+      </CartProvider>
+    </ErrorProvider>
   );
 }
 

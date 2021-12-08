@@ -9,6 +9,7 @@ import { useErrorContext } from "../../context/errorContext";
 import ColorPreview from "../../utils/ColorPreview";
 import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
+import Slide from "@mui/material/Slide";
 
 const ProductImgStyle = styled("img")({
   top: 0,
@@ -38,8 +39,11 @@ function Item({ item }) {
         open={snackbar}
         autoHideDuration={2000}
         onClose={handleCloseSnackbar}
+        TransitionComponent={Slide}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
         <Alert
+          variant="filled"
           onClose={handleCloseSnackbar}
           severity="success"
           sx={{ width: "100%" }}
@@ -80,7 +84,7 @@ function Item({ item }) {
           >
             <Rating
               name="simple-controlled"
-              onChange={(event, newValue) => {
+              onChange={(_, newValue) => {
                 setNewValueRating(newValue);
               }}
               value={newValueRating}

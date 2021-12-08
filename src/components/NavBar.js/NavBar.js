@@ -69,7 +69,7 @@ const categories = [
   { text: "Other2" },
 ];
 function NavBar({ darkMode, handleDarkMode }) {
-  const { cart } = useCartContext();
+  const { cart, totalQuantity } = useCartContext();
 
   const classes = useStyles();
   //const { categoryId } = useParams();
@@ -143,7 +143,7 @@ function NavBar({ darkMode, handleDarkMode }) {
                   color="primary"
                   className={classes.menuItem}
                 >
-                  <Badge badgeContent={cart.length} color="error">
+                  <Badge badgeContent={totalQuantity(cart)} color="error">
                     <ShoppingCartIcon style={{ fill: "white" }} />
                   </Badge>
                 </IconButton>

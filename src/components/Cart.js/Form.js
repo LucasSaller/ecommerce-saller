@@ -13,7 +13,7 @@ function Form({ handleSubmit }) {
   return (
     <Box
       sx={{
-        "& .MuiTextField-root": { m: 1, width: "45ch" },
+        "& .MuiTextField-root": { m: 1 },
         marginTop: 2,
       }}
       noValidate
@@ -46,7 +46,7 @@ function Form({ handleSubmit }) {
         name="email"
       />
       <Button
-        style={{ height: 55, margin: "20px 8px 8px 8px ", width: "25ch" }}
+        style={{ height: 55, margin: "20px 8px 8px 8px " }}
         variant="outlined"
         onClick={() => handleSubmit(formData)}
       >

@@ -46,8 +46,8 @@ function CartContainer() {
         </IconButton>
       </Link>
       <Container>
-        <Grid container padding="20px">
-          <Grid item xs={12} md={10}>
+        <Grid container padding={3}>
+          <Grid item xs={12} md={8}>
             <Typography variant="h4" mb={5}>
               Shopping Cart
             </Typography>
